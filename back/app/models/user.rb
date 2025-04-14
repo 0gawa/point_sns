@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
+
+  validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
+  validates :nickname, presence: true, uniqueness: true, length: { maximum: 50 }
+  validates :bio, length: { maximum: 300 }
 end
