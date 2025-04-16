@@ -6,9 +6,9 @@ RSpec.describe "Postモデルのテスト", type: :model do
     let(:post) { build(:post, user: user) }
 
     context "content_textカラム" do
-      it "空欄でも有効であること" do
+      it "空欄はNG" do
         post.content_text = ""
-        expect(post).to be_valid
+        expect(post).not_to be_valid
       end
 
       it "300文字以下の場合は有効であること" do
