@@ -7,10 +7,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :posts, dependent: :destroy
+
   validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
   validates :nickname, presence: true, length: { maximum: 50 }
   validates :bio, length: { maximum: 300 }
-  validates :is_active, default: true
+  validates :is_active, inclusion: { in: [true, false] }
+  
+  attribute :is_active, default: true
 
   enum role: { user: 0, admin: 1 }
 

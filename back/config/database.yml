@@ -26,7 +26,6 @@ test:
   username: root
   password: password
   database: app_test
-  port: 5433
   host: test_db
 
 
