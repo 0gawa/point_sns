@@ -14,7 +14,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:content_text, images: [],)
+    params.require(:post).permit(:content_text, images: [])
   end
 
   def set_post

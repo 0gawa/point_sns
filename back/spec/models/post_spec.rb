@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Postモデルのテスト", type: :model do
   describe "バリデーションのテスト" do
     let(:user) { create(:user) }
-    let(:post) { build(:post, user: user) }
+    let(:post) { create(:post) }
 
     context "content_textカラム" do
       it "空欄でも有効であること" do
