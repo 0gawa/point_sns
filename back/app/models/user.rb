@@ -17,7 +17,8 @@ class User < ActiveRecord::Base
   
   attribute :is_active, default: true
 
-  enum role: { user: 0, admin: 1 }
+  # Coution: 以下の記述以外でenumを定義するとバグが発生する
+  enum :role, { user: 0, admin: 1 }
 
   def add_to_all_points(points)
     self.all_points += points
