@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "Postモデルのテスト", type: :model do
+  describe "アソシエーションのテスト" do
+    context "userモデルとの関連" do
+      it "N:1の関連付けになっていること" do
+        expect(Post.reflect_on_association(:user).macro).to eq :belongs_to
+      end
+    end
+  end
+
   describe "バリデーションのテスト" do
     let(:user) { create(:user) }
     let(:post) { build(:post, user: user) }

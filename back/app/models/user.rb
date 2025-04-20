@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   has_many :posts, dependent: :destroy
   has_many :post_likes, dependent: :destroy
+  has_many :point_transactions, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
   validates :nickname, presence: true, length: { maximum: 50 }

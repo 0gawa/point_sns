@@ -1,8 +1,8 @@
 class PointTransaction < ApplicationRecord
   belongs_to :user
 
-  enum transaction_type: {
-    others: 0 #使う機会はないと思うが一応
+  enum :transaction_type, {
+    other: 0, #使う機会はないと思うが一応
     post_create: 1,
     post_like: 2,
     item_purchase: 3,
@@ -13,8 +13,8 @@ class PointTransaction < ApplicationRecord
     other_bonus: 8
   }
 
-  enum entity_type: {
-    post: 0, item: 1, group: 2, user: 3, admin: 4
+  enum :entity_type, {
+    post: 0, item: 1, room: 2, user: 3, admin: 4
   }
 
   validates :user_id, presence: true
