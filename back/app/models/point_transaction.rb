@@ -17,9 +17,13 @@ class PointTransaction < ApplicationRecord
     post: 0, item: 1, room: 2, user: 3, admin: 4
   }
 
-  validates :user_id, presence: true
-  validates :point_change, presence: true
-  validates :transaction_type, presence: true
-  validates :entity_type, presence: true
   validates :description, length: { maximum: 500 }, allow_blank: true
+  validates :user_id, presence: true
+  validates :point_change, presence: true, numericality: { only_integer: true }
+  validates :transaction_type, presence: true, inclusion: { in: transaction_types.keys }
+  validates :entity_type, presence: true, inclusion: { in: entity_types.keys }
+
+  private
+
+
 end

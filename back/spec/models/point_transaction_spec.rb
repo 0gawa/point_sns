@@ -13,31 +13,31 @@ RSpec.describe "PointTransactionモデルについて", type: :model do
     let(:user) { create(:user) }
     let(:point_transaction) { create(:point_transaction, user: user) }
 
-    subject { point_transaction }
+    subject { point_transaction.valid? }
 
     context "point_changeは整数値であること" do
-      it "小数のとき○：小数は切り捨てられる" do
+      it "小数のときx：切り捨てられていない小数" do
         point_transaction.point_change = 1.5
-        is_expected.to be_valid
+        is_expected.to eq false
       end
       it "整数のとき○" do
         point_transaction.point_change = 1
-        is_expected.to be_valid
+        is_expected.to eq true
       end
       it "nilのときX" do
         point_transaction.point_change = nil
-        is_expected.not_to be_valid
+        is_expected.to eq false
       end
     end
 
     context "descriptionは500文字以内であること" do
       it "500文字のとき○" do
         point_transaction.description = "a" * 500
-        is_expected.to be_valid
+        is_expected.to eq true
       end
       it "501文字のときX" do
         point_transaction.description = "a" * 501
-        is_expected.not_to be_valid
+        is_expected.to eq false
       end
     end
   end

@@ -34,6 +34,7 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[8.0]
       t.string :image
       t.string :email
       t.text :bio, default: ""
+      t.float :point_rate, default: 1.0
       t.bigint :points_balance, default: 0
       t.bigint :all_points, default:0
       t.decimal :trust_score, precision: 10, scale: 2
