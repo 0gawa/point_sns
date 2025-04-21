@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     }
   end
 
-  resources :posts, only: [:new, :show, :create, :destroy]
+  resources :posts, only: [:new, :show, :create, :destroy] do
+    resource :post_likes, only: [:create, :destroy]
+  end
   resources :point_transactions, only: [:create]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

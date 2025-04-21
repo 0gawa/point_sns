@@ -2,23 +2,18 @@
 require 'rails_helper'
 
 RSpec.describe 'POST /auth/sign_in', type: :request do
-  let!(:user) { create(:user, password: 'password123', password_confirmation: 'password123') }
-  let(:sign_in_url) { '/v1/auth/sign_in' }
-
   def json_body
     JSON.parse(response.body)
   end
 
   context '有効な認証情報の場合' do
+    let!(:user){ create(:user) }
+    let!(:auth_token){ sign_in(user) }
     let(:params) do
       {
         email: user.email,
         password: 'password123'
       }
-    end
-
-    before do
-      post sign_in_url, params: params, as: :json
     end
 
     it 'ステータスコード200 (OK) が返されること' do
@@ -40,15 +35,12 @@ RSpec.describe 'POST /auth/sign_in', type: :request do
   end
 
   context '無効な認証情報 (間違ったパスワード) の場合' do
-    let(:params) do
-      {
-        email: user.email,
-        password: 'wrongpassword'
-      }
-    end
+    let!(:user){ create(:user) }
 
     before do
-      post sign_in_url, params: params, as: :json
+      user.password = 'wrong-password'
+      user.save
+      sign_in(user)
     end
 
     it 'ステータスコード401 (Unauthorized) が返されること' do
@@ -68,15 +60,12 @@ RSpec.describe 'POST /auth/sign_in', type: :request do
   end
 
   context '無効な認証情報 (存在しないメールアドレス) の場合' do
-    let(:params) do
-      {
-        email: 'nonexistent@example.com',
-        password: 'password123'
-      }
-    end
+    let!(:user){ create(:user) }
 
     before do
-      post sign_in_url, params: params, as: :json
+      user.email = 'wrong-email@gmail.com'
+      user.save
+      sign_in(user)
     end
 
     it 'ステータスコード401 (Unauthorized) が返されること' do
