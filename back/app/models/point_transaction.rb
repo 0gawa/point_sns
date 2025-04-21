@@ -25,5 +25,4 @@ class PointTransaction < ApplicationRecord
 
   private
 
-
 end

@@ -22,8 +22,9 @@ class PointTransactionsController < ApplicationController
       :point_change,
       :transaction_type,
       :entity_type,
+      :entity_id,
       :description,
-      :processed_by_admin_id
+      :processed_by_admin_id,
     )
   end
 end
