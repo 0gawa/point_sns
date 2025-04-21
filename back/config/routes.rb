@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   namespace :v1 do
-    mount_devise_token_auth_for "User", at: "auth"
+    mount_devise_token_auth_for "User", at: "auth", controllers: {
+      registrations: "v1/auth/registrations",
+      sessions: "v1/auth/sessions"
+    }
   end
 
   resources :posts, only: [:new, :show, :create, :destroy]
+  resources :point_transactions, only: [:create]
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
