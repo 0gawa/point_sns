@@ -1,9 +1,9 @@
 class PostLikesController < ApplicationController
   before_action :set_post_like_from_current_user, only: [:destroy]
-  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_v1_user!, only: [:create, :destroy]
 
   def create
-    @favorite = current_user.post_likes.new(params[:post_id])
+    @favorite = current_v1_user.post_likes.new(post_id: params[:post_id])
     if @favorite.save!
       render json: { message: 'Like added successfully' }, status: :created
     else
@@ -23,6 +23,6 @@ class PostLikesController < ApplicationController
   private
 
   def set_post_like_from_current_user
-    @post_like = current_user.post_likes.find_by(post_id: params[:post_id])
+    @post_like = current_v1_user.post_likes.find_by(post_id: params[:post_id])
   end
 end

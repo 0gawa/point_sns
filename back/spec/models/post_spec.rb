@@ -15,17 +15,17 @@ RSpec.describe "Postモデルのテスト", type: :model do
 
     context "content_textカラム" do
       it "空欄はNG" do
-        post.content_text = ""
+        post.content = ""
         expect(post).not_to be_valid
       end
 
       it "300文字以下の場合は有効であること" do
-        post.content_text = "a" * 300
+        post.content = "a" * 300
         expect(post).to be_valid
       end
 
       it "301文字以上であること" do
-        post.content_text = "a" * 301
+        post.content = "a" * 301
         expect(post).not_to be_valid
       end
     end

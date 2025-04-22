@@ -5,7 +5,7 @@ FactoryBot.define do
     nickname { Faker::Internet.username(specifier: 5..10) }
     bio { Faker::Lorem.sentence(word_count: 10) }
     role { 0 }
-    password { 'password' }
-    password_confirmation { 'password' }
+    password { 'test-data-password' }
+    password_confirmation { 'test-data-password' }
   end
 end
