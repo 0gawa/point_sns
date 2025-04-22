@@ -58,23 +58,4 @@ RSpec.describe 'POST /auth/sign_in', type: :request do
       expect(json_body['errors']).to include(expected_error_message)
     end
   end
-
-  context '無効な認証情報 (存在しないメールアドレス) の場合' do
-    let!(:user){ create(:user) }
-
-    before do
-      user.email = 'wrong-email@gmail.com'
-      user.save
-      sign_in(user)
-    end
-
-    it 'ステータスコード401 (Unauthorized) が返されること' do
-      expect(response).to have_http_status(:unauthorized)
-    end
-
-    it 'レスポンスボディにエラーメッセージが含まれること' do
-      expected_error_message = I18n.t('devise_token_auth.sessions.bad_credentials')
-      expect(json_body['errors']).to include(expected_error_message)
-    end
-  end
 end

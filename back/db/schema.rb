@@ -67,9 +67,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_20_080820) do
 
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.text "content_text", default: "", null: false
-    t.integer "like_count", default: 0, null: false
-    t.integer "comment_count", default: 0, null: false
+    t.text "content", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
@@ -92,9 +90,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_20_080820) do
     t.string "image"
     t.string "email"
     t.text "bio", default: ""
-    t.bigint "points_balance", default: 0
-    t.bigint "all_points", default: 0
-    t.decimal "trust_score", precision: 10, scale: 2
+    t.float "point_rate", default: 1.0, null: false
+    t.bigint "points_balance", default: 0, null: false
+    t.bigint "all_points", default: 0, null: false
+    t.decimal "trust_score", precision: 10, scale: 2, default: "0.0", null: false
     t.integer "role", default: 0, null: false
     t.boolean "is_active", default: true, null: false
     t.datetime "last_login_at"

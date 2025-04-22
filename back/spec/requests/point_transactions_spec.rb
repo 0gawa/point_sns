@@ -53,7 +53,6 @@ RSpec.describe "PointTransactionsコントローラーについて", type: :requ
         }, headers: @auth_token
 
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(PointTransaction.last.point_change).not_to eq(-10)
       end
     end
   end

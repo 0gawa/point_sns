@@ -26,8 +26,7 @@ test:
   username: root
   password: password
   database: app_test
-  host: test_db
-
+  host: test-db
 
 # Store production database in the storage/ directory, which by default
 # is mounted as a persistent Docker volume in config/deploy.yml.
