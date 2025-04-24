@@ -13,9 +13,7 @@ class PointTransaction < ApplicationRecord
     other_bonus: 8
   }
 
-  enum :entity_type, {
-    post: 0, item: 1, room: 2, user: 3, admin: 4
-  }
+  enum :entity_type, {post: 0, item: 1, room: 2, user: 3, admin: 4}
 
   validates :description, length: { maximum: 500 }, allow_blank: true
   validates :user_id, presence: true
