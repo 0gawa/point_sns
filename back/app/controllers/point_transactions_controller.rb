@@ -11,6 +11,11 @@ class PointTransactionsController < ApplicationController
       normal_point_service = Points::GetNormalPointService.new(current_v1_user.point_rate)
       cal_point = normal_point_service.call(@point_transaction.point_change)
       @point_transaction.point_change = cal_point
+    elsif @point_transaction.transaction_type == PointTransaction.transaction_types[:post_like]
+    elsif @point_transaction.transaction_type == PointTransaction.transaction_types[:group_create_fee]
+    elsif @point_transaction.transaction_type == PointTransaction.transaction_types[:group_join_fee]
+    elsif @point_transaction.transaction_type == PointTransaction.transaction_types[:admin_adjust]
+    elsif @point_transaction.transaction_type == PointTransaction.transaction_types[:initial_bonus]
     end
 
     if @point_transaction.save
