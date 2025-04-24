@@ -26,13 +26,9 @@ class User < ActiveRecord::Base
 
   private
 
-  def add_all_points(points)
-    self.all_points += points
-    save
-  end
-
   def add_points_balance(points)
     self.points_balance += points
+    self.all_points += points
     save
   end
 

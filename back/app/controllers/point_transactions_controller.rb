@@ -6,12 +6,17 @@ class PointTransactionsController < ApplicationController
     @point_transaction = PointTransaction.new(point_transaction_params)
     @point_transaction.user_id = current_v1_user.id
 
-    # To Do: ユーザーのポイントロジックを実装する
+    if @point_transaction.transaction_type == PointTransaction.transaction_types[:item_purchase]
+    elsif @point_transaction.transaction_type == PointTransaction.transaction_types[:post_create]
+      normal_point_service = Points::GetNormalPointService.new(current_v1_user.point_rate)
+      cal_point = normal_point_service.call(@point_transaction.point_change)
+      @point_transaction.point_change = cal_point
+    end
 
-    if @point_transaction.save!
+    if @point_transaction.save
       render json: @point_transaction, status: :created
     else
-      render json: @point_transaction.errors, status: :unprocessable_entity
+      render json: { error: 'Unable to add this point transaction' }, status: :unprocessable_entity
     end
   end
 
@@ -22,9 +27,7 @@ class PointTransactionsController < ApplicationController
       :point_change,
       :transaction_type,
       :entity_type,
-      :entity_id,
-      :description,
-      :processed_by_admin_id,
+      :entity_id
     )
   end
 end

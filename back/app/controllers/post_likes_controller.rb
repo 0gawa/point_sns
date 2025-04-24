@@ -4,7 +4,7 @@ class PostLikesController < ApplicationController
 
   def create
     @favorite = current_v1_user.post_likes.new(post_id: params[:post_id])
-    if @favorite.save!
+    if @favorite.save
       render json: { message: 'Like added successfully' }, status: :created
     else
       render json: { error: 'Unable to add like' }, status: :unprocessable_entity

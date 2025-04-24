@@ -47,7 +47,7 @@ RSpec.describe "PointTransactionsコントローラーについて", type: :requ
           point_transaction: {
             point_change: 4.5,
             transaction_type: :post_create,
-            entity_type: "post",
+            entity_type: "tweet",
             entity_id: new_post.id
           }
         }, headers: @auth_token
