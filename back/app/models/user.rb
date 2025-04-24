@@ -50,4 +50,8 @@ class User < ActiveRecord::Base
     self.point_rate -= down_rate
     save
   end
+
+  def admin?
+    self.role == 'admin'
+  end
 end
