@@ -28,11 +28,6 @@ class PointTransactionsController < ApplicationController
   private
 
   def point_transaction_params
-    params.require(:point_transaction).permit(
-      :point_change,
-      :transaction_type,
-      :entity_type,
-      :entity_id
-    )
+    params.require(:point_transaction).permit(:point_change, :transaction_type, :entity_type, :entity_id)
   end
 end
