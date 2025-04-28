@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :comment_replies, dependent: :destroy
   has_many :user_items, dependent: :destroy
   has_many :follower_users, class_name: 'Follow', foreign_key: 'follower_user_id', dependent: :destroy
+  has_many :owner_groups, class_name: "Group", foreign_key: "creator_user_id"
   
   validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
   validates :nickname, presence: true, length: { maximum: 50 }

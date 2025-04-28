@@ -8,8 +8,18 @@ Rails.application.routes.draw do
 
   resources :posts, only: [:new, :show, :create, :destroy] do
     resource :post_likes, only: [:create, :destroy]
+    resources :post_comments, only: [:create, :destroy] do
+      resources :comment_replies, only: [:create, :destroy]
+    end
   end
   resources :point_transactions, only: [:create]
+  resources :users, only: [:show]
+  resources :purchases, only: [:index, :show]
+  resources :groups do
+    resource :join_groups, only: [:create, :destroy, :edit]
+  end
+
+  resources :admins
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
