@@ -21,7 +21,7 @@ class Points::PayForCreatingGroupService
     transaction.transaction_type = :group_create_fee
     transaction.entity_type = :room
     transation.entity_id = @group.id
-    transaction.description = "グループ作成に必要なポイント"
+    transaction.description = "グループ作成に必要なポイント取引"
     
     transaction.save
   end
