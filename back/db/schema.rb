@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_20_080820) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_24_093422) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,65 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_20_080820) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "admin_logs", force: :cascade do |t|
+    t.integer "admin_user_id", null: false
+    t.integer "action_type", null: false
+    t.text "description", null: false
+    t.integer "target_user_id"
+    t.integer "target_group_id"
+    t.integer "target_post_id"
+    t.integer "target_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "comment_replies", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "post_comment_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_comment_id"], name: "index_comment_replies_on_post_comment_id"
+    t.index ["user_id"], name: "index_comment_replies_on_user_id"
+  end
+
+  create_table "follows", force: :cascade do |t|
+    t.integer "follower_user_id", null: false
+    t.integer "followed_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "group_members", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.integer "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_group_members_on_group_id"
+    t.index ["user_id"], name: "index_group_members_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "creator_user_id", null: false
+    t.integer "join_fee", default: 0, null: false
+    t.integer "max_group_member", default: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "item_type", null: false
+    t.integer "price", null: false
+    t.boolean "is_sale", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "point_transactions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.integer "point_change", null: false
@@ -53,6 +112,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_20_080820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_point_transactions_on_user_id"
+  end
+
+  create_table "post_comments", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "post_id", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_post_comments_on_post_id"
+    t.index ["user_id"], name: "index_post_comments_on_user_id"
   end
 
   create_table "post_likes", force: :cascade do |t|
@@ -71,6 +140,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_20_080820) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "user_items", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.boolean "is_equipped", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_user_items_on_item_id"
+    t.index ["user_id"], name: "index_user_items_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -109,8 +188,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_20_080820) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "comment_replies", "post_comments"
+  add_foreign_key "comment_replies", "users"
+  add_foreign_key "group_members", "groups"
+  add_foreign_key "group_members", "users"
   add_foreign_key "point_transactions", "users"
+  add_foreign_key "post_comments", "posts"
+  add_foreign_key "post_comments", "users"
   add_foreign_key "post_likes", "posts"
   add_foreign_key "post_likes", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "user_items", "items"
+  add_foreign_key "user_items", "users"
 end

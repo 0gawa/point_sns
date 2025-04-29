@@ -2,6 +2,7 @@ class PointTransactionsController < ApplicationController
   # 履歴を削除することは不可能
   before_action :authenticate_v1_user!, only: [:create]
   
+  # to　do 要改善
   def create
     @point_transaction = PointTransaction.new(point_transaction_params)
     @point_transaction.user_id = current_v1_user.id

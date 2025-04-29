@@ -29,8 +29,6 @@ class User < ActiveRecord::Base
   # Coution: 以下の記述以外でenumを定義するとバグが発生する
   enum :role, { user: 0, admin: 1 }
 
-  private
-
   def add_points_balance(points)
     self.points_balance += points
     self.all_points += points

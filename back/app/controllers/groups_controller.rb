@@ -1,11 +1,10 @@
 class GroupsController < ApplicationController
-  include Points::PayForCreatingGroupService
-  include CanCreateGroupService
   before_action :authenticate_v1_user!
 
   def create
-    unless CanCreateGroupService.new(current_v1_user).call
+    unless Points::CanCreateGroupService.new(current_v1_user).call
       render json: {error: "Not enough points available."}, status: :unprocessable_entity
+      return
     end
 
     @group = Group.new(group_params)
@@ -22,9 +21,9 @@ class GroupsController < ApplicationController
   def destroy
     @group = Group.find(params[:id])
     if @group.destroy
-      render json: { 'Group deleted successfully' }, status: :ok
+      render json: { message: 'Group deleted successfully' }, status: :ok
     else
-      render json: { 'Group wasn\'t deleted successfully' }, status: :unprocessable_entity
+      render json: { error: 'Group wasn\'t deleted successfully' }, status: :unprocessable_entity
     end
   end
 

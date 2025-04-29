@@ -1,6 +1,4 @@
 class JoinGroupsController < ApplicationController
-  include Points::CanJoinGroupService
-  include Points::PayForJoiningGroupService
   before_action :authenticate_v1_user!
 
   def create
@@ -10,6 +8,7 @@ class JoinGroupsController < ApplicationController
 
     unless Points::CanJoinGroupService.new(current_v1_user, group.join_fee)
       render json: {error: "Not enough points available."}, status: :unprocessable_entity
+      return
     end
 
     if member.save
@@ -32,6 +31,7 @@ class JoinGroupsController < ApplicationController
   def set_group(group_id)
     unless Group.find(group_id)
       render json: {error: "Not found group_id: #{group_id}"}, status: :unprocessable_entity
+      return
     end
   end
 end
