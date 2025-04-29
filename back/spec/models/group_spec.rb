@@ -62,7 +62,7 @@ RSpec.describe "Groupモデルについて", type: :model do
       end
       it "number of max_group_member is less than 2: false" do
         group.max_group_member = 1
-        is_expected.eq false
+        is_expected.to eq false
       end
       it "number of max_group_member is less than 100 and greater than 2" do
         group.max_group_member = 2
